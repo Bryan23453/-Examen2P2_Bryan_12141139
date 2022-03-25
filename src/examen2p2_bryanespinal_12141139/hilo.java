@@ -28,6 +28,7 @@ public class hilo implements Runnable{
     @Override
     public void run() {
         int pass=0;
+        System.out.println(pass+"   "+valor);
         while(pass<=valor){
             barra.setValue(barra.getValue()+1);
             pass++;
@@ -35,6 +36,7 @@ public class hilo implements Runnable{
                 Thread.sleep(5);
             } catch (InterruptedException ex) {
             }
-        }        
+        }
+        barra.setValue(0);
     }
 }

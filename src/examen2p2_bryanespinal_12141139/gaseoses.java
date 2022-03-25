@@ -17,6 +17,9 @@ public class gaseoses extends planetas implements Serializable{
     public gaseoses(int tamanio, int peso, String nombre, int x, int y) {
         super(tamanio, peso, nombre, x, y);
     }
+
+    public gaseoses() {
+    }
     
 
 }

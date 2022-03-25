@@ -19,7 +19,7 @@ public class Main extends javax.swing.JFrame {
 
     Manejo_de_datos mc = new Manejo_de_datos("./cientificos.cbm");
     Manejo_de_datos mc2 = new Manejo_de_datos("./planetas.cbm");
-    ArrayList <String> S  = new ArrayList();
+    ArrayList<String> S = new ArrayList();
 
     public Main() {
         initComponents();
@@ -198,56 +198,57 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         mc.cargarArchivo();
-        planetas plnettt1=new planetas();
-        planetas plnettt2=new planetas();
+        
+        planetas plnettt1 = null;
+        planetas plnettt2 = null;
         for (planetas plat : mc.getCienti().get(cienti.getSelectedIndex()).getPla()) {
             if (cosa1.getText().equals(plat.getNombre())) {
-                plnettt1=plat;
+                plnettt1 = plat;
             }
             if (cosa2.getText().equals(plat.getNombre())) {
-                plnettt2=plat;
+                plnettt2 = plat;
             }
         }
-        Random r=new Random();
-        boolean pass=false;
-        boolean pass2=false;
-        int ramdom=1+r.nextInt(100);
-        if (plnettt1 instanceof gaseoses) {
-            if (ramdom<=20) {
-                pass=true;
-            }
-            pass2=true;
-        }else{
-            if (plnettt1 instanceof terrestres) {
-                pass2=true;
-                if (ramdom<=25) {
-                    pass=true;
+        if (plnettt1 == null) {
+            mc2.cargarArchivo();
+            for (planetas plat : mc2.getPla()) {
+                if (cosa1.getText().equals(plat.getNombre())) {
+                    plnettt1 = plat;
+                }
+                if (cosa2.getText().equals(plat.getNombre())) {
+                    plnettt2 = plat;
                 }
             }
         }
-        double X=(Math.pow((plnettt1.getX()-plnettt2.getX()), 2));
-        double Y=Math.pow(plnettt1.getY()-plnettt2.getY(),2);
-        double d=Math.sqrt(X+Y);
+        Random r = new Random();
+        boolean pass = false;
+        int ramdom = 1 + r.nextInt(100);
+        if (ramdom <= 25) {
+            pass = true;
+        }
+        double X = (Math.pow((plnettt1.getX() - plnettt2.getX()), 2));
+        double Y = Math.pow(plnettt1.getY() - plnettt2.getY(), 2);
+        double d = Math.sqrt(X + Y);
         if (pass) {
             mc.cargarArchivo();
-            mc.getCienti().get(cienti.getSelectedIndex()).setPla(new planetas((plnettt1.getTamanio()+plnettt2.getTamanio())/2,(plnettt1.getTamanio()+plnettt2.getTamanio())/2,JOptionPane.showInputDialog(this, "Ingrese Nuevo Nombre Del Planeta Creado"),(plnettt1.getX()+plnettt2.getX())/2,(plnettt1.getY()+plnettt2.getY())/2));
+            mc.getCienti().get(cienti.getSelectedIndex()).setPla(new planetas((plnettt1.getTamanio() + plnettt2.getTamanio()) / 2, (plnettt1.getTamanio() + plnettt2.getTamanio()) / 2, JOptionPane.showInputDialog(this, "Ingrese Nuevo Nombre Del Planeta Creado"), (plnettt1.getX() + plnettt2.getX()) / 2, (plnettt1.getY() + plnettt2.getY()) / 2));
         }
-        if (pass2) {
-            gifnormal.setVisible(false);
-            gifchoco.setVisible(true);
-            barrita.setMaximum((int) d);
-            hilo h=new hilo(barrita, (int) d);
-            Thread HILO = new Thread(h);
-            HILO.start();
-        }
-        
+        gifnormal.setVisible(false);
+        gifchoco.setVisible(true);
+        int val = (int) d;
+        barrita.setMaximum(val);
+        System.out.println(val + "asdadadasdaadadadasdasdad");
+        hilo h = new hilo(barrita, val);
+        Thread HILO = new Thread(h);
+        HILO.start();
+
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jRadioButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton1MouseClicked
         if (jRadioButton1.isSelected()) {
             cienti.setEnabled(false);
             mc2.cargarArchivopublicos();
-            S=new ArrayList();
+            S = new ArrayList();
             DefaultTreeModel modelo1 = (DefaultTreeModel) treeplanet.getModel();
             DefaultMutableTreeNode root = (DefaultMutableTreeNode) modelo1.getRoot();
             root = new DefaultMutableTreeNode("Planetas");
@@ -262,7 +263,7 @@ public class Main extends javax.swing.JFrame {
             try {
                 mc.cargarArchivo();
                 cienti.setEnabled(true);
-                S=new ArrayList();
+                S = new ArrayList();
                 DefaultTreeModel modelo1 = (DefaultTreeModel) treeplanet.getModel();
                 DefaultMutableTreeNode root = (DefaultMutableTreeNode) modelo1.getRoot();
                 root = new DefaultMutableTreeNode("Planetas Descubiertos Por " + cienti.getSelectedItem());
@@ -290,7 +291,7 @@ public class Main extends javax.swing.JFrame {
     private void cientiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cientiItemStateChanged
         try {
             cienti.setEnabled(true);
-            S= new ArrayList();
+            S = new ArrayList();
             mc.cargarArchivo();
             DefaultTreeModel modelo1 = (DefaultTreeModel) treeplanet.getModel();
             DefaultMutableTreeNode root = (DefaultMutableTreeNode) modelo1.getRoot();
@@ -308,19 +309,19 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_cientiItemStateChanged
 
     private void treeplanetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_treeplanetMouseClicked
-        if (evt.isMetaDown()){
+        if (evt.isMetaDown()) {
             menusito.show(evt.getComponent(), evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_treeplanetMouseClicked
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        int[] r=treeplanet.getSelectionRows();
-        cosa1.setText(S.get(r[0]-1));
+        int[] r = treeplanet.getSelectionRows();
+        cosa1.setText(S.get(r[0] - 1));
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        int[] r=treeplanet.getSelectionRows();
-        cosa2.setText(S.get(r[0]-1));
+        int[] r = treeplanet.getSelectionRows();
+        cosa2.setText(S.get(r[0] - 1));
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**

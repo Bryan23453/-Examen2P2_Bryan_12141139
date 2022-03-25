@@ -18,6 +18,9 @@ public class terrestres extends planetas implements Serializable{
         super(tamanio, peso, nombre, x, y);
     }
 
+    public terrestres() {
+    }
+
 
    
 
