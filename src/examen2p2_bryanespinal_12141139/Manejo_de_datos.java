@@ -25,14 +25,6 @@ public class Manejo_de_datos {
 
     public Manejo_de_datos(String path) {
         archivo = new File(path);
-        pla.add(new terrestres(5000,13000,"Mercurio",400,300));
-        pla.add(new terrestres(100000,15000,"Venus",640,260));
-        pla.add(new terrestres(140000,17000,"Tierra",760,570));
-        pla.add(new terrestres(90000,12000,"Marte",360,360));
-        pla.add(new gaseoses(400000,40000,"Jupiter",340,310));
-        pla.add(new gaseoses(300000,30000,"Saturno",560,450));
-        pla.add(new gaseoses(200000,20000,"Urano",670,690));
-        pla.add(new gaseoses(200000,20000,"Neptuno",840,900));
     }
 
     public ArrayList<cientificos> getCienti() {
