@@ -128,7 +128,7 @@ public class Main extends javax.swing.JFrame {
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 480, 270, 60));
 
         gifchoco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/examen2p2_bryanespinal_12141139/gif/df7c4e8e334228988d94179f3b4e0915.gif"))); // NOI18N
-        jPanel2.add(gifchoco, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 270, -1, 420));
+        jPanel2.add(gifchoco, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 270, -1, 420));
 
         treeplanet.setBackground(new java.awt.Color(204, 255, 255));
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
