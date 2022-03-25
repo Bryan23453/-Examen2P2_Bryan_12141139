@@ -5,6 +5,7 @@
  */
 package examen2p2_bryanespinal_12141139;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -17,6 +18,7 @@ public class Main extends javax.swing.JFrame {
 
     Manejo_de_datos mc = new Manejo_de_datos("./cientificos.cbm");
     Manejo_de_datos mc2 = new Manejo_de_datos("./planetas.cbm");
+    ArrayList <String> S  = new ArrayList();
 
     public Main() {
         initComponents();
@@ -206,11 +208,13 @@ public class Main extends javax.swing.JFrame {
         if (jRadioButton1.isSelected()) {
             cienti.setEnabled(false);
             mc2.cargarArchivopublicos();
+            S=new ArrayList();
             DefaultTreeModel modelo1 = (DefaultTreeModel) treeplanet.getModel();
             DefaultMutableTreeNode root = (DefaultMutableTreeNode) modelo1.getRoot();
             root = new DefaultMutableTreeNode("Planetas");
             System.out.println(mc2.getPla().size());
             for (planetas planetass : mc2.getPla()) {
+                S.add(planetass.getNombre());
                 DefaultMutableTreeNode planetitas = new DefaultMutableTreeNode(planetass.getNombre());
                 root.add(planetitas);
             }
@@ -219,12 +223,14 @@ public class Main extends javax.swing.JFrame {
             try {
                 mc.cargarArchivo();
                 cienti.setEnabled(true);
+                S=new ArrayList();
                 DefaultTreeModel modelo1 = (DefaultTreeModel) treeplanet.getModel();
                 DefaultMutableTreeNode root = (DefaultMutableTreeNode) modelo1.getRoot();
                 root = new DefaultMutableTreeNode("Planetas Descubiertos Por " + cienti.getSelectedItem());
                 for (planetas planetass : mc.getCienti().get(cienti.getSelectedIndex()).getPla()) {
                     DefaultMutableTreeNode planetitas = new DefaultMutableTreeNode(planetass.getNombre());
                     root.add(planetitas);
+                    S.add(planetass.getNombre());
                 }
                 modelo1.setRoot(root);
             } catch (Exception e) {
@@ -245,6 +251,7 @@ public class Main extends javax.swing.JFrame {
     private void cientiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cientiItemStateChanged
         try {
             cienti.setEnabled(true);
+            S= new ArrayList();
             mc.cargarArchivo();
             DefaultTreeModel modelo1 = (DefaultTreeModel) treeplanet.getModel();
             DefaultMutableTreeNode root = (DefaultMutableTreeNode) modelo1.getRoot();
@@ -253,6 +260,7 @@ public class Main extends javax.swing.JFrame {
             for (planetas planetass : mc.getCienti().get(cienti.getSelectedIndex()).getPla()) {
                 DefaultMutableTreeNode planetitas = new DefaultMutableTreeNode(planetass.getNombre());
                 root.add(planetitas);
+                S.add(planetass.getNombre());
             }
             modelo1.setRoot(root);
         } catch (Exception e) {
@@ -267,11 +275,13 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_treeplanetMouseClicked
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        cosa1.setText((String)treeplanet.getLastSelectedPathComponent());
+        int[] r=treeplanet.getSelectionRows();
+        cosa1.setText(S.get(r[0]-1));
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
+        int[] r=treeplanet.getSelectionRows();
+        cosa2.setText(S.get(r[0]-1));
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
