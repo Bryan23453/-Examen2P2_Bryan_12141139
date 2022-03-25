@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
 /**
@@ -19,10 +20,14 @@ import javax.swing.JProgressBar;
 public class hilo implements Runnable{
    JProgressBar barra;
    int valor;
+   JLabel a;
+   JLabel b;
 
-    public hilo(JProgressBar H,int valor) {
+    public hilo(JProgressBar H,int valor,JLabel a,JLabel b) {
         this.barra = H;
         this.valor=valor;
+        this.a=a;
+        this.b=b;
     }
     
     @Override
@@ -38,5 +43,7 @@ public class hilo implements Runnable{
             }
         }
         barra.setValue(0);
+        b.setVisible(false);
+        a.setVisible(true);
     }
 }

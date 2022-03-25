@@ -232,13 +232,15 @@ public class Main extends javax.swing.JFrame {
         if (pass) {
             mc.cargarArchivo();
             mc.getCienti().get(cienti.getSelectedIndex()).setPla(new planetas((plnettt1.getTamanio() + plnettt2.getTamanio()) / 2, (plnettt1.getTamanio() + plnettt2.getTamanio()) / 2, JOptionPane.showInputDialog(this, "Ingrese Nuevo Nombre Del Planeta Creado"), (plnettt1.getX() + plnettt2.getX()) / 2, (plnettt1.getY() + plnettt2.getY()) / 2));
+            mc.escribirArchivo();
         }
+        
         gifnormal.setVisible(false);
         gifchoco.setVisible(true);
         int val = (int) d;
         barrita.setMaximum(val);
         System.out.println(val + "asdadadasdaadadadasdasdad");
-        hilo h = new hilo(barrita, val);
+        hilo h = new hilo(barrita, val,gifnormal,gifchoco);
         Thread HILO = new Thread(h);
         HILO.start();
 
