@@ -128,7 +128,7 @@ public class Main extends javax.swing.JFrame {
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 480, 270, 60));
 
         gifchoco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/examen2p2_bryanespinal_12141139/gif/df7c4e8e334228988d94179f3b4e0915.gif"))); // NOI18N
-        jPanel2.add(gifchoco, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 270, -1, 420));
+        jPanel2.add(gifchoco, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 270, -1, 420));
 
         treeplanet.setBackground(new java.awt.Color(204, 255, 255));
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
@@ -197,21 +197,12 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        mc.cargarArchivo();
-        
-        planetas plnettt1 = null;
-        planetas plnettt2 = null;
-        for (planetas plat : mc.getCienti().get(cienti.getSelectedIndex()).getPla()) {
-            if (cosa1.getText().equals(plat.getNombre())) {
-                plnettt1 = plat;
-            }
-            if (cosa2.getText().equals(plat.getNombre())) {
-                plnettt2 = plat;
-            }
-        }
-        if (plnettt1 == null) {
-            mc2.cargarArchivo();
-            for (planetas plat : mc2.getPla()) {
+        try {
+            mc.cargarArchivo();
+
+            planetas plnettt1 = null;
+            planetas plnettt2 = null;
+            for (planetas plat : mc.getCienti().get(cienti.getSelectedIndex()).getPla()) {
                 if (cosa1.getText().equals(plat.getNombre())) {
                     plnettt1 = plat;
                 }
@@ -219,30 +210,43 @@ public class Main extends javax.swing.JFrame {
                     plnettt2 = plat;
                 }
             }
+            if (plnettt1 == null||plnettt2 == null) {
+                mc2.cargarArchivo();
+                for (planetas plat : mc2.getPla()) {
+                    if (cosa1.getText().equals(plat.getNombre())) {
+                        plnettt1 = plat;
+                    }
+                    if (cosa2.getText().equals(plat.getNombre())) {
+                        plnettt2 = plat;
+                    }
+                }
+            }
+            Random r = new Random();
+            boolean pass = false;
+            int ramdom = 1 + r.nextInt(100);
+            if (ramdom <= 25) {
+                pass = true;
+            }
+            double X = (Math.pow((plnettt1.getX() - plnettt2.getX()), 2));
+            double Y = Math.pow(plnettt1.getY() - plnettt2.getY(), 2);
+            double d = Math.sqrt(X + Y);
+            if (pass) {
+                mc.cargarArchivo();
+                mc.getCienti().get(cienti.getSelectedIndex()).setPla(new planetas((plnettt1.getTamanio() + plnettt2.getTamanio()) / 2, (plnettt1.getTamanio() + plnettt2.getTamanio()) / 2, JOptionPane.showInputDialog(this, "Ingrese Nuevo Nombre Del Planeta Creado"), (plnettt1.getX() + plnettt2.getX()) / 2, (plnettt1.getY() + plnettt2.getY()) / 2));
+                mc.escribirArchivo();
+            }
+
+            gifnormal.setVisible(false);
+            gifchoco.setVisible(true);
+            int val = (int) d;
+            barrita.setMaximum(val);
+            hilo h = new hilo(barrita, val, gifnormal, gifchoco);
+            Thread HILO = new Thread(h);
+            HILO.start();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocurrio Un Error Asegurese De Haber Ingresedo Los 2 planetas");
         }
-        Random r = new Random();
-        boolean pass = false;
-        int ramdom = 1 + r.nextInt(100);
-        if (ramdom <= 25) {
-            pass = true;
-        }
-        double X = (Math.pow((plnettt1.getX() - plnettt2.getX()), 2));
-        double Y = Math.pow(plnettt1.getY() - plnettt2.getY(), 2);
-        double d = Math.sqrt(X + Y);
-        if (pass) {
-            mc.cargarArchivo();
-            mc.getCienti().get(cienti.getSelectedIndex()).setPla(new planetas((plnettt1.getTamanio() + plnettt2.getTamanio()) / 2, (plnettt1.getTamanio() + plnettt2.getTamanio()) / 2, JOptionPane.showInputDialog(this, "Ingrese Nuevo Nombre Del Planeta Creado"), (plnettt1.getX() + plnettt2.getX()) / 2, (plnettt1.getY() + plnettt2.getY()) / 2));
-            mc.escribirArchivo();
-        }
-        
-        gifnormal.setVisible(false);
-        gifchoco.setVisible(true);
-        int val = (int) d;
-        barrita.setMaximum(val);
-        System.out.println(val + "asdadadasdaadadadasdasdad");
-        hilo h = new hilo(barrita, val,gifnormal,gifchoco);
-        Thread HILO = new Thread(h);
-        HILO.start();
+
 
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -254,7 +258,6 @@ public class Main extends javax.swing.JFrame {
             DefaultTreeModel modelo1 = (DefaultTreeModel) treeplanet.getModel();
             DefaultMutableTreeNode root = (DefaultMutableTreeNode) modelo1.getRoot();
             root = new DefaultMutableTreeNode("Planetas");
-            System.out.println(mc2.getPla().size());
             for (planetas planetass : mc2.getPla()) {
                 S.add(planetass.getNombre());
                 DefaultMutableTreeNode planetitas = new DefaultMutableTreeNode(planetass.getNombre());
@@ -275,8 +278,9 @@ public class Main extends javax.swing.JFrame {
                     S.add(planetass.getNombre());
                 }
                 modelo1.setRoot(root);
+                cosa1.setText("");
+                cosa2.setText("");
             } catch (Exception e) {
-
             }
         }
     }//GEN-LAST:event_jRadioButton1MouseClicked
@@ -298,13 +302,14 @@ public class Main extends javax.swing.JFrame {
             DefaultTreeModel modelo1 = (DefaultTreeModel) treeplanet.getModel();
             DefaultMutableTreeNode root = (DefaultMutableTreeNode) modelo1.getRoot();
             root = new DefaultMutableTreeNode("Planetas Descubiertos Por " + cienti.getSelectedItem());
-            System.out.println(cienti.getSelectedItem());
             for (planetas planetass : mc.getCienti().get(cienti.getSelectedIndex()).getPla()) {
                 DefaultMutableTreeNode planetitas = new DefaultMutableTreeNode(planetass.getNombre());
                 root.add(planetitas);
                 S.add(planetass.getNombre());
             }
             modelo1.setRoot(root);
+            cosa1.setText("");
+            cosa2.setText("");
         } catch (Exception e) {
 
         }
@@ -317,13 +322,25 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_treeplanetMouseClicked
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        int[] r = treeplanet.getSelectionRows();
-        cosa1.setText(S.get(r[0] - 1));
+        try {
+            int[] r = treeplanet.getSelectionRows();
+            cosa1.setText(S.get(r[0] - 1));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Selecione Un Valor");
+        }
+        
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        int[] r = treeplanet.getSelectionRows();
-        cosa2.setText(S.get(r[0] - 1));
+        try {
+            int[] r = treeplanet.getSelectionRows();
+            cosa2.setText(S.get(r[0] - 1));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Selecione Un Valor");
+        }
+            
+        
+
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
