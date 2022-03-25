@@ -228,7 +228,6 @@ public class Main extends javax.swing.JFrame {
         double X=(Math.pow((plnettt1.getX()-plnettt2.getX()), 2));
         double Y=Math.pow(plnettt1.getY()-plnettt2.getY(),2);
         double d=Math.sqrt(X+Y);
-        System.out.println(ramdom+"    sfdfdgdgfdgdgdfgd");
         if (pass) {
             mc.cargarArchivo();
             mc.getCienti().get(cienti.getSelectedIndex()).setPla(new planetas((plnettt1.getTamanio()+plnettt2.getTamanio())/2,(plnettt1.getTamanio()+plnettt2.getTamanio())/2,JOptionPane.showInputDialog(this, "Ingrese Nuevo Nombre Del Planeta Creado"),(plnettt1.getX()+plnettt2.getX())/2,(plnettt1.getY()+plnettt2.getY())/2));

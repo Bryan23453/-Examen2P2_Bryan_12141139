@@ -8,6 +8,8 @@ package examen2p2_bryanespinal_12141139;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JProgressBar;
 
 /**
@@ -28,6 +30,11 @@ public class hilo implements Runnable{
         int pass=0;
         while(pass<=valor){
             barra.setValue(barra.getValue()+1);
+            pass++;
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException ex) {
+            }
         }        
     }
 }
