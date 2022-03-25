@@ -198,29 +198,46 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         mc.cargarArchivo();
-        planetas plnettt=new planetas();
+        planetas plnettt1=new planetas();
+        planetas plnettt2=new planetas();
         for (planetas plat : mc.getCienti().get(cienti.getSelectedIndex()).getPla()) {
             if (cosa1.getText().equals(plat.getNombre())) {
-                plnettt=plat;
-                break;
+                plnettt1=plat;
+            }
+            if (cosa2.getText().equals(plat.getNombre())) {
+                plnettt2=plat;
             }
         }
-        Random r;
-        boolean pass=true;
+        Random r=new Random();
+        boolean pass=false;
         boolean pass2=false;
-        if (plnettt instanceof gaseoses) {
-            
+        int ramdom=1+r.nextInt(100);
+        if (plnettt1 instanceof gaseoses) {
+            if (ramdom<=20) {
+                pass=true;
+            }
             pass2=true;
         }else{
-            if (plnettt instanceof terrestres) {
-                
+            if (plnettt1 instanceof terrestres) {
                 pass2=true;
+                if (ramdom<=25) {
+                    pass=true;
+                }
             }
+        }
+        double X=(Math.pow((plnettt1.getX()-plnettt2.getX()), 2));
+        double Y=Math.pow(plnettt1.getY()-plnettt2.getY(),2);
+        double d=Math.sqrt(X+Y);
+        System.out.println(ramdom+"    sfdfdgdgfdgdgdfgd");
+        if (pass) {
+            mc.cargarArchivo();
+            mc.getCienti().get(cienti.getSelectedIndex()).setPla(new planetas((plnettt1.getTamanio()+plnettt2.getTamanio())/2,(plnettt1.getTamanio()+plnettt2.getTamanio())/2,JOptionPane.showInputDialog(this, "Ingrese Nuevo Nombre Del Planeta Creado"),(plnettt1.getX()+plnettt2.getX())/2,(plnettt1.getY()+plnettt2.getY())/2));
         }
         if (pass2) {
             gifnormal.setVisible(false);
             gifchoco.setVisible(true);
-            hilo h=new hilo(barrita,100);
+            barrita.setMaximum((int) d);
+            hilo h=new hilo(barrita, (int) d);
             Thread HILO = new Thread(h);
             HILO.start();
         }

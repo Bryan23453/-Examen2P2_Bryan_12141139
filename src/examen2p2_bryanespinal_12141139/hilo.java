@@ -25,8 +25,9 @@ public class hilo implements Runnable{
     
     @Override
     public void run() {
-        while(true){
-            
+        int pass=0;
+        while(pass<=valor){
+            barra.setValue(barra.getValue()+1);
         }        
     }
 }
