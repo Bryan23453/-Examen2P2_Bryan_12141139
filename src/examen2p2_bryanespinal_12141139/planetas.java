@@ -26,6 +26,9 @@ public class planetas implements Serializable{
         this.y = y;
     }
 
+    public planetas() {
+    }
+
     public int getTamanio() {
         return tamanio;
     }

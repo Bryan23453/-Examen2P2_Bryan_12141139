@@ -6,6 +6,7 @@
 package examen2p2_bryanespinal_12141139;
 
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -43,8 +44,7 @@ public class Main extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jProgressBar1 = new javax.swing.JProgressBar();
-        jProgressBar2 = new javax.swing.JProgressBar();
+        barrita = new javax.swing.JProgressBar();
         jRadioButton1 = new javax.swing.JRadioButton();
         jToggleButton1 = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -85,11 +85,8 @@ public class Main extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jProgressBar1.setStringPainted(true);
-        jPanel2.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 1010, 100));
-
-        jProgressBar2.setStringPainted(true);
-        jPanel2.add(jProgressBar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 26, 1010, 100));
+        barrita.setStringPainted(true);
+        jPanel2.add(barrita, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 26, 1010, 170));
 
         jRadioButton1.setBackground(new java.awt.Color(204, 255, 255));
         jRadioButton1.setText("Publicos");
@@ -200,8 +197,34 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        gifnormal.setVisible(false);
-        gifchoco.setVisible(true);
+        mc.cargarArchivo();
+        planetas plnettt=new planetas();
+        for (planetas plat : mc.getCienti().get(cienti.getSelectedIndex()).getPla()) {
+            if (cosa1.getText().equals(plat.getNombre())) {
+                plnettt=plat;
+                break;
+            }
+        }
+        Random r;
+        boolean pass=true;
+        boolean pass2=false;
+        if (plnettt instanceof gaseoses) {
+            
+            pass2=true;
+        }else{
+            if (plnettt instanceof terrestres) {
+                
+                pass2=true;
+            }
+        }
+        if (pass2) {
+            gifnormal.setVisible(false);
+            gifchoco.setVisible(true);
+            hilo h=new hilo(barrita,100);
+            Thread HILO = new Thread(h);
+            HILO.start();
+        }
+        
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jRadioButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton1MouseClicked
@@ -334,6 +357,7 @@ public class Main extends javax.swing.JFrame {
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JProgressBar barrita;
     private javax.swing.JComboBox<String> cienti;
     private javax.swing.JTextPane cosa1;
     private javax.swing.JTextPane cosa2;
@@ -346,8 +370,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
